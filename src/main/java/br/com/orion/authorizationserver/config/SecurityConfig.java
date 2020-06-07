@@ -5,9 +5,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 
 import br.com.orion.authorizationserver.service.UserDetailServiceImpl;
@@ -16,9 +15,8 @@ import lombok.AllArgsConstructor;
 
 @EnableWebSecurity
 @EnableResourceServer
-@EnableAuthorizationServer
 @AllArgsConstructor
-public class SegurancaConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private UserDetailServiceImpl userDetailServiceImpl;
     //private PasswordEncoder passwordEncoder;
@@ -30,19 +28,18 @@ public class SegurancaConfig extends WebSecurityConfigurerAdapter {
     
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        //auth.inMemoryAuthentication().withUser("arilson").password("123").roles("ADMIN");
         auth.userDetailsService(userDetailServiceImpl).passwordEncoder(passwordEncoder());
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
-         return NoOpPasswordEncoder.getInstance();
+    PasswordEncoder passwordEncoder() {
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
-    // @Bean
-    // PasswordEncoder passwordEncoder() {
-    //     return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+    //Generate password
+    // public static void main(String[] args) {
+    //     var crypt = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+    //     System.out.println(crypt.encode("secret"));
     // }
-
 
 }
