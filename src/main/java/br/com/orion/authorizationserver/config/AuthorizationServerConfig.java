@@ -18,27 +18,33 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
     private final AuthenticationManager authenticationManager;
     private final OAuth2ClientProperties clientProperties;
-    private final String jwtSecret;
-
-    public AuthorizationServerConfig(AuthenticationManager authenticationManager,
-            OAuth2ClientProperties clientProperties, @Value("${jwt.secret}") String jwtSecret) {
+    
+    @Value("${jwt.validation-token}")
+    private int validationToken;
+    
+    @Value("${jwt.secret}")
+    private String jwtSecret;
+    
+    public AuthorizationServerConfig(AuthenticationManager authenticationManager, OAuth2ClientProperties clientProperties) {
         this.authenticationManager = authenticationManager;
         this.clientProperties = clientProperties;
-        this.jwtSecret = jwtSecret;
     }
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
+        
         .withClient(clientProperties.getClientId())
-        .secret(clientProperties.getClientSecret())
-        .scopes("password");
+        .secret(clientProperties.getClientSecret()).accessTokenValiditySeconds(validationToken)
+        .scopes("read", "write");
     }
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        endpoints.tokenStore(tokenStore()).accessTokenConverter(accessTokenConverter())
-                .authenticationManager(authenticationManager);
+        endpoints.tokenStore(tokenStore())
+            //.prefix("/orion")
+            .accessTokenConverter(accessTokenConverter())
+            .authenticationManager(authenticationManager);
     }
 
     @Bean
