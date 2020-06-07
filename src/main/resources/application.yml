@@ -1,0 +1,26 @@
+server:
+  port: 8001
+  servlet:
+    context-path: /auth
+
+security: 
+  oauth2:
+    client:
+      #scope:
+      #- password
+      client-id: clientId
+      client-secret: secret
+      access-token-validity-seconds: 6000
+
+spring:
+  datasource:
+    driverClassName: org.h2.Driver
+    url: jdbc:h2:mem:rumo-a-lua-db;MODE=PostgreSQL;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password:
+    data:
+    - classpath:data.sql  
+
+  h2:
+    console:
+      enabled: true

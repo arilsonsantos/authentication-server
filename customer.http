@@ -1,0 +1,11 @@
+@host=http://localhost:8001/auth/oauth/token
+
+###
+
+POST {{host}}
+Content-Type: application/x-www-form-urlencoded
+Authorization: Basic arilson 123
+
+grant_type=password
+client-id=clientId
+client-secret=secret
