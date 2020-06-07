@@ -1,25 +1,29 @@
 server:
   port: 8001
   servlet:
-    context-path: /auth
+    context-path: /orion
 
 security: 
   oauth2:
     client:
-      #scope:
-      #- password
+      # scope:
+      # - read
       client-id: clientId
-      client-secret: "{bcrypt}$2a$10$THKtE2UYIzTJAoj1jqrkh.4nEPaOw2EnwngLocKJ24/f7vw7fbluC"
-      access-token-validity-seconds: 6000
+      client-secret: "{bcrypt}$2a$10$6iRl5ZsUaTca1zpqqUSro.RMmLydztQpGt.d5lTM4101bobzH93/G"
+      # access-token-validity-seconds: 6000
   
 jwt:
   secret: segredo
+  validation-token: 6000
       
 
 spring:
+  devtools:
+    livereload:
+      port: 8111
   datasource:
     driverClassName: org.h2.Driver
-    url: jdbc:h2:mem:rumo-a-lua-db;MODE=PostgreSQL;DB_CLOSE_ON_EXIT=FALSE
+    url: jdbc:h2:mem:oauth2-db;MODE=PostgreSQL;DB_CLOSE_ON_EXIT=FALSE
     username: sa
     password:
     data:
