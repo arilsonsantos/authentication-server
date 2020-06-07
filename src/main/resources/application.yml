@@ -11,6 +11,10 @@ security:
       client-id: clientId
       client-secret: secret
       access-token-validity-seconds: 6000
+  
+jwt:
+  secret: segredo
+      
 
 spring:
   datasource:
