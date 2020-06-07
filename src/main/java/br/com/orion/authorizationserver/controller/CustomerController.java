@@ -11,7 +11,7 @@ import br.com.orion.authorizationserver.service.CustomerService;
 import lombok.AllArgsConstructor;
 
 @RestController
-@RequestMapping("/customer")
+@RequestMapping("/api/v1/customer")
 @AllArgsConstructor
 public class CustomerController {
 
