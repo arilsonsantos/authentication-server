@@ -2,6 +2,7 @@ package br.com.orion.authorizationserver.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -21,7 +22,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private UserDetailServiceImpl userDetailServiceImpl;
     //private PasswordEncoder passwordEncoder;
 
-    @Bean
+    @Bean(name = BeanIds.AUTHENTICATION_MANAGER)
     protected AuthenticationManager authenticationManager() throws Exception {
         return super.authenticationManager();
     }
@@ -39,7 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     //Generate password
     // public static void main(String[] args) {
     //     var crypt = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-    //     System.out.println(crypt.encode("secret"));
+    //     System.out.println(crypt.encode("123"));
     // }
 
 }
